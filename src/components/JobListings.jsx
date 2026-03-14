@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react'
 import JobListing from './JobListing';
-import { useJobStore } from '../store/useJobStore'
+import { useQuery } from '@tanstack/react-query';
+import apiClient from '../lib/axiosInstance';
 const JobListings = ({ isHome = false }) => {
-    const { jobs, isLoading, error, fetchJobs } = useJobStore()
     const title = isHome ? 'Recent Jobs' : 'Browse Jobs'
-    useEffect(() => {
-        if (isHome) {
-            fetchJobs(3)
-        } else {
-            fetchJobs()
-        }
-    }, [fetchJobs, isHome])
+    let url = '/jobs?_page=1&_per_page=25'
+    if (isHome) url = '/jobs?_page=1&_per_page=3'
+    const {data:jobs,isLoading} =useQuery({
+        queryKey:["jobs"],
+        queryFn:async ()=>{
+            const res = await apiClient.get(url);
+            return res.data.data
+        },
+    })
     return (
         <section className="bg-blue-50 px-4 py-10">
             <div className="container-xl lg:container m-auto">

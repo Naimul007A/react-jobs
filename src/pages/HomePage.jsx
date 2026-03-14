@@ -7,7 +7,7 @@ const HomePage = () => {
     <>
     <Hero/>
     <HomeCards/>
-   <JobListings/>
+   <JobListings isHome={true}/>
     <section className="m-auto max-w-lg my-10 px-6">
       <a
         href="jobs.html"

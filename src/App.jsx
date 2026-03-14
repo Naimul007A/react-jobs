@@ -1,27 +1,20 @@
 import React from 'react'
-import NavBar from './components/NavBar'
-import Hero from './components/Hero'
-import HomeCards from './components/HomeCards'
-import JobListings from './components/JobListings'
-import Footer from './components/Footer'
-
-const App = () => {
-  return (
+import { Route,createBrowserRouter,RouterProvider,createRoutesFromElements } from "react-router-dom";
+import MainLayout from './layouts/MainLayout';
+import HomePage from './pages/HomePage';
+import JobPage from './pages/JobPage';
+import NotFound from './pages/404NotFound';
+const router = createBrowserRouter(createRoutesFromElements(
     <>
-    <NavBar/>
-    <Hero/>
-    <HomeCards/>
-   <JobListings/>
-
-    <section className="m-auto max-w-lg my-10 px-6">
-      <a
-        href="jobs.html"
-        className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
-        >View All Jobs</a>
-    </section>
-    <Footer />
+    <Route path="/" element={<MainLayout/>}>
+        <Route index element={<HomePage />} />
+        <Route path='/jobs' element={<JobPage />} />
+    </Route>
+    <Route path='*' element={<NotFound />} />
     </>
-  )
+))
+const App = () => {
+  return <RouterProvider router={router} />
 }
 
 export default App
